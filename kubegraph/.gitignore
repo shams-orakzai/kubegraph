@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+*.json
+!tests/fixtures/*.json
+inventory.json
+graph.json
+.env
+kubeconfig

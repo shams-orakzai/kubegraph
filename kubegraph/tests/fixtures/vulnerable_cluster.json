@@ -1,0 +1,277 @@
+{
+  "cluster_name": "synthetic-vulnerable-01",
+  "namespaces": [
+    {
+      "name": "default"
+    },
+    {
+      "name": "prod"
+    },
+    {
+      "name": "kube-system"
+    }
+  ],
+  "service_accounts": [
+    {
+      "name": "web",
+      "namespace": "default",
+      "automount": true
+    },
+    {
+      "name": "api",
+      "namespace": "default",
+      "automount": true
+    },
+    {
+      "name": "worker",
+      "namespace": "prod",
+      "automount": true
+    },
+    {
+      "name": "secops",
+      "namespace": "prod",
+      "automount": true
+    },
+    {
+      "name": "deployer",
+      "namespace": "kube-system",
+      "automount": true
+    },
+    {
+      "name": "default",
+      "namespace": "default",
+      "automount": true
+    }
+  ],
+  "pods": [
+    {
+      "name": "web-frontend",
+      "namespace": "default",
+      "service_account": "web",
+      "node": null,
+      "privileged": false,
+      "host_pid": false,
+      "host_network": false,
+      "host_path": false
+    },
+    {
+      "name": "api-server",
+      "namespace": "default",
+      "service_account": "api",
+      "node": null,
+      "privileged": false,
+      "host_pid": false,
+      "host_network": false,
+      "host_path": false
+    },
+    {
+      "name": "batch-worker",
+      "namespace": "prod",
+      "service_account": "worker",
+      "node": null,
+      "privileged": false,
+      "host_pid": false,
+      "host_network": false,
+      "host_path": false
+    },
+    {
+      "name": "audit-agent",
+      "namespace": "prod",
+      "service_account": "secops",
+      "node": null,
+      "privileged": false,
+      "host_pid": false,
+      "host_network": false,
+      "host_path": false
+    }
+  ],
+  "roles": [
+    {
+      "kind": "ClusterRole",
+      "name": "cluster-admin",
+      "namespace": null,
+      "rules": [
+        {
+          "api_groups": [
+            "*"
+          ],
+          "resources": [
+            "*"
+          ],
+          "verbs": [
+            "*"
+          ],
+          "resource_names": []
+        }
+      ]
+    },
+    {
+      "kind": "ClusterRole",
+      "name": "pod-creator",
+      "namespace": null,
+      "rules": [
+        {
+          "api_groups": [
+            ""
+          ],
+          "resources": [
+            "pods"
+          ],
+          "verbs": [
+            "create",
+            "get",
+            "list"
+          ],
+          "resource_names": []
+        }
+      ]
+    },
+    {
+      "kind": "ClusterRole",
+      "name": "secret-reader",
+      "namespace": null,
+      "rules": [
+        {
+          "api_groups": [
+            ""
+          ],
+          "resources": [
+            "secrets"
+          ],
+          "verbs": [
+            "get",
+            "list"
+          ],
+          "resource_names": []
+        }
+      ]
+    },
+    {
+      "kind": "Role",
+      "name": "configmap-viewer",
+      "namespace": "default",
+      "rules": [
+        {
+          "api_groups": [
+            ""
+          ],
+          "resources": [
+            "configmaps"
+          ],
+          "verbs": [
+            "get",
+            "list"
+          ],
+          "resource_names": []
+        }
+      ]
+    }
+  ],
+  "bindings": [
+    {
+      "kind": "ClusterRoleBinding",
+      "name": "deployer-admin",
+      "namespace": null,
+      "role_ref": {
+        "kind": "ClusterRole",
+        "name": "cluster-admin"
+      },
+      "subjects": [
+        {
+          "kind": "ServiceAccount",
+          "name": "deployer",
+          "namespace": "kube-system"
+        }
+      ]
+    },
+    {
+      "kind": "ClusterRoleBinding",
+      "name": "web-podcreator",
+      "namespace": null,
+      "role_ref": {
+        "kind": "ClusterRole",
+        "name": "pod-creator"
+      },
+      "subjects": [
+        {
+          "kind": "ServiceAccount",
+          "name": "web",
+          "namespace": "default"
+        }
+      ]
+    },
+    {
+      "kind": "ClusterRoleBinding",
+      "name": "api-podcreator",
+      "namespace": null,
+      "role_ref": {
+        "kind": "ClusterRole",
+        "name": "pod-creator"
+      },
+      "subjects": [
+        {
+          "kind": "ServiceAccount",
+          "name": "api",
+          "namespace": "default"
+        }
+      ]
+    },
+    {
+      "kind": "ClusterRoleBinding",
+      "name": "worker-podcreator",
+      "namespace": null,
+      "role_ref": {
+        "kind": "ClusterRole",
+        "name": "pod-creator"
+      },
+      "subjects": [
+        {
+          "kind": "ServiceAccount",
+          "name": "worker",
+          "namespace": "prod"
+        }
+      ]
+    },
+    {
+      "kind": "RoleBinding",
+      "name": "secops-secretreader",
+      "namespace": "kube-system",
+      "role_ref": {
+        "kind": "ClusterRole",
+        "name": "secret-reader"
+      },
+      "subjects": [
+        {
+          "kind": "ServiceAccount",
+          "name": "secops",
+          "namespace": "prod"
+        }
+      ]
+    },
+    {
+      "kind": "RoleBinding",
+      "name": "web-cmviewer",
+      "namespace": "default",
+      "role_ref": {
+        "kind": "Role",
+        "name": "configmap-viewer"
+      },
+      "subjects": [
+        {
+          "kind": "ServiceAccount",
+          "name": "web",
+          "namespace": "default"
+        }
+      ]
+    }
+  ],
+  "secrets": [
+    {
+      "name": "deployer-token",
+      "namespace": "kube-system",
+      "type": "kubernetes.io/service-account-token",
+      "sa_token_for": "deployer"
+    }
+  ],
+  "nodes": []
+}
