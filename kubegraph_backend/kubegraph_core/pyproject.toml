@@ -9,11 +9,14 @@ dependencies = [
     "typer>=0.12",
     "rich>=13.7",
     "kubernetes>=29.0",
+    "fastapi>=0.110",           
+    "uvicorn[standard]>=0.29",    
+    "python-multipart>=0.0.9",    
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "pytest-cov>=5.0"]
-fast = ["rustworkx>=0.14"]  # optional accelerator for the scalability work
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "httpx2"] 
+fast = ["rustworkx>=0.14"]
 
 [project.scripts]
 kubegraph = "kubegraph.cli:app"
