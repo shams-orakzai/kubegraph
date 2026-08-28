@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/theme.ts","./src/api/client.ts","./src/components/DetailDrawer.tsx","./src/components/GraphView.tsx","./src/components/PathsPanel.tsx","./src/components/RemediationsPanel.tsx","./src/components/TopBar.tsx","./src/cy/style.ts"],"errors":true,"version":"5.9.3"}

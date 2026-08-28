@@ -66,6 +66,19 @@ curl localhost:8000/paths                   # attack paths to cluster-admin
 curl localhost:8000/graph                   # Cytoscape.js elements for the UI
 ```
 
+## Frontend (React + Cytoscape.js)
+
+An interactive dashboard that visualises the attack graph, traces paths to
+cluster-admin, and previews which fix severs the most routes.
+
+```bash
+cd frontend
+npm install
+npm run dev            # http://localhost:5173  (expects the API on :8000)
+```
+
+Set a non-default API URL via `frontend/.env` (`VITE_API_URL=...`).
+
 ## Test
 
 ```bash

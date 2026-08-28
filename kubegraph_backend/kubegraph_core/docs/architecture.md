@@ -53,7 +53,7 @@ kubeconfig ──▶ Collector ──▶ Inventory (JSON) ──▶ Graph Builde
 - [x] Phase 2 — graph builder + path engine + synthetic ground-truth fixture
 - [~] Phase 3 — choke-point engine DONE (exact + centrality); eval harness + object-level remediation + synthetic generator pending
 - [~] Phase 4 — FastAPI backend DONE; PostgreSQL persistence layer pending
-- [ ] Phase 5 — React + Cytoscape.js dashboard
+- [x] Phase 5 — React + Cytoscape.js dashboard (frontend/)
 - [ ] Phase 6 — containerisation + kind/EKS deploy
 - [ ] Phase 7–8 — ground-truth corpus, experiments, results
 

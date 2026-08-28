@@ -12,6 +12,22 @@ class Stats(BaseModel):
     removable_edges: int
     footholds: int
     footholds_reaching_target: int
+    exposure_score: int
+    exposure_band: str
+    paths: int
+    choke_points: int
+
+
+class FleetItem(BaseModel):
+    snapshot_id: str
+    cluster_name: str
+    exposure_score: int
+    exposure_band: str
+    footholds: int
+    footholds_reaching_target: int
+    paths: int
+    choke_points: int
+    current: bool
 
 
 class CyNodeData(BaseModel):

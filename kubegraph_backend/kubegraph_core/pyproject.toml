@@ -1,6 +1,6 @@
 [project]
 name = "kubegraph"
-version = "0.1.0"
+version = "0.2.0"
 description = "Graph-theoretic identification and remediation of Kubernetes privilege-escalation paths"
 requires-python = ">=3.11"
 dependencies = [
@@ -9,13 +9,17 @@ dependencies = [
     "typer>=0.12",
     "rich>=13.7",
     "kubernetes>=29.0",
-    "fastapi>=0.110",           
-    "uvicorn[standard]>=0.29",    
-    "python-multipart>=0.0.9",    
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "python-multipart>=0.0.9",
+    "sqlalchemy>=2.0",
+    "passlib>=1.7.4",
+    "pyjwt>=2.8",
+    "email-validator>=2.1",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "pytest-cov>=5.0", "httpx2"] 
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "httpx2"]
 fast = ["rustworkx>=0.14"]
 
 [project.scripts]
