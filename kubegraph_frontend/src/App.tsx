@@ -6,7 +6,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Overview from "./pages/Overview";
 import Graph from "./pages/Graph";
-import { Remediations, Fleet, Settings } from "./pages/Placeholders";
+import Remediations from "./pages/Remediations";
+import Fleet from "./pages/Fleet";
+import { Settings } from "./pages/Placeholders";
 
 // Redirect away from auth pages if already signed in.
 function PublicOnly({ children }: { children: React.ReactNode }) {

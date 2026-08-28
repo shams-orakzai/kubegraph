@@ -12,14 +12,6 @@ function Placeholder({ badge, title, note }: { badge: string; title: string; not
   );
 }
 
-export function Remediations() {
-  return <Placeholder badge="INCREMENT 5" title="Remediations"
-    note="Ranked choke-point fixes with preview and impact." />;
-}
-export function Fleet() {
-  return <Placeholder badge="INCREMENT 5" title="Fleet"
-    note="Compare exposure across every connected cluster." />;
-}
 export function Settings() {
   return <Placeholder badge="LATER" title="Settings"
     note="Workspace, cluster connections, and team management." />;
