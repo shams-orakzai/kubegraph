@@ -70,7 +70,7 @@ src/
     ├── Graph.tsx            interactive Cytoscape canvas: path tracing, blast radius, cut preview
     ├── Remediations.tsx     ranked fix table; "Preview" jumps to the graph with the fix highlighted
     ├── Fleet.tsx            multi-cluster comparison
-    └── Settings.tsx         profile · persona · workspace · connection/session
+    └── Settings.tsx         profile · persona · workspace (incl. inventory import) · connection/session
 ```
 
 ## How the pieces connect

@@ -62,6 +62,8 @@ export const api = {
 
   // cluster / analysis
   loadDemo: () => request<{ snapshot_id: string; stats: Stats }>("/demo", { method: "POST" }),
+  loadInventory: (inventory: unknown) =>
+    request<{ snapshot_id: string; stats: Stats }>("/inventory", { method: "POST", body: JSON.stringify(inventory) }),
   snapshots: () => request<{ snapshot_id: string; cluster_name: string; current: boolean }[]>("/snapshots"),
   stats: () => request<Stats>("/stats"),
   fleet: () => request<FleetItem[]>("/fleet"),

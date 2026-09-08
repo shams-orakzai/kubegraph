@@ -149,6 +149,7 @@ curl -s        localhost:8000/remediations   -H "Authorization: Bearer $TOKEN"
 - **Interactive graph** — Cytoscape.js dark-canvas view with path tracing and fix preview.
 - **Role-based dashboards** — engineer / platform / CISO views over the same analysis.
 - **Fleet view** — compare exposure across multiple clusters.
+- **Import collected clusters from the UI** — drag an `inventory.json` into Settings; no curl required.
 - **Authentication** — register / login / JWT, protecting every analysis endpoint.
 - **Twelve escalation primitives** modelled as typed edges (see `docs/edge-taxonomy.md`).
 
