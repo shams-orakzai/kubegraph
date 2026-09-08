@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import Logo from "../components/Logo";
 
 const ROLE_LABEL: Record<string, string> = {
   engineer: "Security Engineer", platform: "Platform Lead", ciso: "CISO",
@@ -17,7 +18,7 @@ export default function Sidebar() {
   const initials = (user?.name || "U").split(" ").map((s) => s[0]).slice(0, 2).join("").toUpperCase();
   return (
     <aside className="side">
-      <div className="brand"><div className="mark" /><b>KubeGraph</b></div>
+      <div className="brand"><Logo size={30} /><b>KubeGraph</b></div>
       <nav className="nav">
         {items.map((it) => (
           <NavLink key={it.to} to={it.to} end={it.end}

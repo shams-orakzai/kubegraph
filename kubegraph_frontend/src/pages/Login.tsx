@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Logo from "../components/Logo";
 import { useAuth } from "../auth/AuthContext";
 import { ApiError } from "../api/client";
 
@@ -26,7 +27,7 @@ export default function Login() {
   return (
     <div className="auth">
       <div className="auth-art">
-        <div className="mk"><div className="mark" /><b>KubeGraph</b></div>
+        <div className="mk"><Logo size={34} /><b>KubeGraph</b></div>
         <div>
           <h1>See every path an attacker could take to cluster-admin — and the one fix that closes them.</h1>
           <p>Graph-based Kubernetes privilege-escalation analysis for your whole fleet.</p>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Logo from "../components/Logo";
 import { useAuth } from "../auth/AuthContext";
 import { ApiError } from "../api/client";
 
@@ -27,7 +28,7 @@ export default function Signup() {
   return (
     <div className="auth">
       <div className="auth-art">
-        <div className="mk"><div className="mark" /><b>KubeGraph</b></div>
+        <div className="mk"><Logo size={34} /><b>KubeGraph</b></div>
         <div>
           <h1>Map your cluster's attack surface in minutes.</h1>
           <p>Connect a cluster with read-only access and get a ranked list of the fixes that matter most.</p>

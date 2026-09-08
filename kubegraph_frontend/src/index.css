@@ -7,6 +7,7 @@
   --bg:#F6F8FC; --surface:#FFFFFF; --line:#E7ECF3; --line2:#EEF2F7; --raise:#FBFCFE;
   --text:#0F1B2D; --dim:#5B6B84; --faint:#94A3B8;
   --brand:#6366F1; --brand2:#8B5CF6; --brandbg:#EEF0FE;
+  --brand-grad:linear-gradient(135deg,#6366F1,#8B5CF6);
   --target:#E11D48; --pod:#0EA5A4; --sa:#3B82F6; --role:#D97706; --secret:#7C3AED;
   --high:#E11D48; --med:#D97706; --low:#0EA5A4; --green:#059669;
   --sans:"Plus Jakarta Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
@@ -52,7 +53,7 @@ button{cursor:pointer;border:none;background:none}
 .seg{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:3px}
 .seg button{padding:6px 13px;border-radius:8px;font-size:12.5px;color:var(--dim);font-weight:600}
 .seg button.on{background:var(--surface);color:var(--brand);box-shadow:var(--shadow)}
-.btn{padding:9px 15px;border-radius:10px;background:var(--brand);color:#fff;font-weight:600;font-size:13px;box-shadow:var(--shadow)}
+.btn{padding:9px 15px;border-radius:10px;background:var(--brand-grad);color:#fff;font-weight:600;font-size:13px;box-shadow:var(--shadow)}
 .btn:disabled{opacity:.6;cursor:default}
 .btn-ghost{background:var(--surface);color:var(--text);border:1px solid var(--line)}
 
@@ -100,7 +101,7 @@ button{cursor:pointer;border:none;background:none}
 .field label{font-size:12px;color:var(--dim);display:block;margin-bottom:6px;font-weight:600}
 .field input{width:100%;padding:12px 14px;border-radius:11px;background:var(--bg);border:1px solid var(--line);color:var(--text);font-size:14px}
 .field input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(99,102,241,.15);background:#fff}
-.af .primary{width:100%;padding:13px;border-radius:12px;background:var(--brand);color:#fff;font-weight:700;font-size:14px;margin-top:4px}
+.af .primary{width:100%;padding:13px;border-radius:12px;background:var(--brand-grad);color:#fff;font-weight:700;font-size:14px;margin-top:4px}
 .af .primary:disabled{opacity:.6;cursor:default}
 .af .sso{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);margin-top:10px;color:var(--text);font-size:13px;font-weight:600}
 .af .foot{text-align:center;font-size:13px;color:var(--dim);margin-top:18px}
