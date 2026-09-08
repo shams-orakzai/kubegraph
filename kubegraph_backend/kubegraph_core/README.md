@@ -92,3 +92,17 @@ pytest -q
 - `docs/threat-model.md` — attacker model, what a path/remediation means
 - `docs/edge-taxonomy.md` — every edge ↔ escalation primitive
 - `docs/architecture.md` — pipeline, module map, phase plan
+
+## Evaluation harness
+
+A version-controlled ground-truth corpus (C1-C5) and the controlled experiment
+live in `src/kubegraph/evaluation/`. Run it live:
+
+```bash
+python -m kubegraph.evaluation.run          # detection, ranking (choke-point vs severity), scalability
+python -m kubegraph.evaluation.run --json out.json
+```
+
+Each cluster is a synthetic inventory with documented ground truth (the true
+attack paths), fed straight into the engine — which is what lets detection
+accuracy be measured. See `evaluation/clusters.py`.

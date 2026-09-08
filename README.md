@@ -168,6 +168,29 @@ npx tsc --noEmit   # type-check
 npm run build      # production build
 ```
 
+## Evaluation — reproduce the study
+
+The controlled experiment from the dissertation is runnable from real code. A
+version-controlled corpus of five synthetic ground-truth clusters (C1-C5) lives
+in `src/kubegraph/evaluation/clusters.py`, each constructed to probe one thing;
+the harness runs the engine over them and prints detection, the choke-point vs
+severity ranking comparison, aggregate stats, rank fidelity, and scalability.
+
+```bash
+cd kubegraph_backend/kubegraph_core && source .venv/bin/activate
+pip install -e ".[dev]"                         # once, to pick up the evaluation module
+python -m kubegraph.evaluation.run              # prints the full results
+python -m kubegraph.evaluation.run --json out.json   # also save raw numbers
+```
+
+| Cluster | Footholds | Probes |
+|---|---|---|
+| C1 single-admin | 4 | choke point coincides with a critical finding |
+| C2 uneven-admins | 15 | discrimination among equal-severity findings (the divergence) |
+| C3 modest-choke-decoys | 7 | a pivotal fix amid higher-noise findings |
+| C4 redundant-mesh | 5 | the edge-level limitation, shown empirically |
+| C5 deep-chain | 3 | detection on a long multi-hop path |
+
 ---
 
 ## Configuration
