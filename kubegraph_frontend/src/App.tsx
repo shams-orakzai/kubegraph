@@ -8,7 +8,7 @@ import Overview from "./pages/Overview";
 import Graph from "./pages/Graph";
 import Remediations from "./pages/Remediations";
 import Fleet from "./pages/Fleet";
-import { Settings } from "./pages/Placeholders";
+import Settings from "./pages/Settings";
 
 // Redirect away from auth pages if already signed in.
 function PublicOnly({ children }: { children: React.ReactNode }) {

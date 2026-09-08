@@ -69,8 +69,3 @@ export interface BlastRadius {
   reachable: string[];
 }
 
-export interface BlastRadius {
-  node: string;
-  reachable_count: number;
-  reachable: string[];
-}

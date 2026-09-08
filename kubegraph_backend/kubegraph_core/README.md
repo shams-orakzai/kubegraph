@@ -14,8 +14,10 @@ attack paths via choke-point / centrality analysis.
 
 ## Status
 
-Phases 0–2 complete: collector, attack-graph builder, and path engine, validated
-against a synthetic ground-truth cluster. See `docs/architecture.md`.
+Full stack implemented and tested: read-only collector, attack-graph builder, path engine,
+choke-point remediation ranking, exposure scoring, and an authenticated REST API (15 tests
+passing). Consumed by the React dashboard in `../../kubegraph_frontend`. See
+`docs/architecture.md` for the design and `docs/edge-taxonomy.md` for the escalation model.
 
 ## Install
 

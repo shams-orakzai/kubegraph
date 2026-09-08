@@ -58,6 +58,7 @@ export const api = {
   login: (b: { email: string; password: string }) =>
     request<TokenResponse>("/auth/login", { method: "POST", body: JSON.stringify(b) }),
   me: () => request<User>("/auth/me"),
+  health: () => request<{ name: string; version: string; current_snapshot: string | null; snapshots: number }>("/"),
 
   // cluster / analysis
   loadDemo: () => request<{ snapshot_id: string; stats: Stats }>("/demo", { method: "POST" }),
