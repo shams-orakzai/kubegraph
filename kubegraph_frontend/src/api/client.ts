@@ -2,7 +2,8 @@
 // broadcasts a 'kg-unauthorized' event on 401 so the auth layer can log out.
 
 import type {
-  BlastRadius, FleetItem, GraphResponse, PathResponse, Remediation, Stats, TokenResponse, User,
+  BlastRadius, DemoCatalogItem, FleetItem, GraphResponse, PathResponse, Remediation,
+  SnapshotSummary, Stats, TokenResponse, User,
 } from "./types";
 
 const BASE = (import.meta.env.VITE_API_URL as string) || "http://localhost:8000";
@@ -61,10 +62,14 @@ export const api = {
   health: () => request<{ name: string; version: string; current_snapshot: string | null; snapshots: number }>("/"),
 
   // cluster / analysis
-  loadDemo: () => request<{ snapshot_id: string; stats: Stats }>("/demo", { method: "POST" }),
+  loadDemo: (id?: string) =>
+    request<{ snapshot_id: string; stats: Stats }>(id ? `/demo/${encodeURIComponent(id)}` : "/demo", { method: "POST" }),
+  demoCatalog: () => request<DemoCatalogItem[]>("/demo/catalog"),
+  selectSnapshot: (sid: string) =>
+    request<{ snapshot_id: string; stats: Stats }>(`/snapshots/${encodeURIComponent(sid)}/select`, { method: "POST" }),
   loadInventory: (inventory: unknown) =>
     request<{ snapshot_id: string; stats: Stats }>("/inventory", { method: "POST", body: JSON.stringify(inventory) }),
-  snapshots: () => request<{ snapshot_id: string; cluster_name: string; current: boolean }[]>("/snapshots"),
+  snapshots: () => request<SnapshotSummary[]>("/snapshots"),
   stats: () => request<Stats>("/stats"),
   fleet: () => request<FleetItem[]>("/fleet"),
   graph: () => request<GraphResponse>("/graph"),

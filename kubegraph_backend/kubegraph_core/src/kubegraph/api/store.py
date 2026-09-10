@@ -41,6 +41,25 @@ class SnapshotStore:
         sid = snapshot_id or self._current
         return self._snaps.get(sid) if sid else None
 
+    def by_cluster_name(self, cluster_name: str) -> Snapshot | None:
+        """First loaded snapshot for a given cluster name, if any.
+
+        Lets catalog loads be idempotent: selecting the same demo cluster twice
+        reuses its snapshot instead of piling up duplicates.
+        """
+        for snap in self._snaps.values():
+            if snap.inventory.cluster_name == cluster_name:
+                return snap
+        return None
+
+    def set_current(self, snapshot_id: str) -> bool:
+        """Make an already-loaded snapshot the current one. Returns False if
+        the id is unknown."""
+        if snapshot_id not in self._snaps:
+            return False
+        self._current = snapshot_id
+        return True
+
     def list(self) -> list[Snapshot]:
         return list(self._snaps.values())
 

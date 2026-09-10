@@ -95,6 +95,18 @@ class SnapshotSummary(BaseModel):
     current: bool
 
 
+class DemoCatalogItem(BaseModel):
+    """One selectable synthetic cluster in the dropdown."""
+    id: str
+    name: str
+    description: str
+    group: str
+    cluster_name: str
+    loaded: bool                    # already in the store this session?
+    snapshot_id: str | None = None  # its snapshot id, if loaded
+    current: bool = False           # is it the active cluster?
+
+
 class LoadResponse(BaseModel):
     snapshot_id: str
     stats: Stats

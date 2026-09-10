@@ -69,3 +69,20 @@ export interface BlastRadius {
   reachable: string[];
 }
 
+export interface DemoCatalogItem {
+  id: string;
+  name: string;
+  description: string;
+  group: string;
+  cluster_name: string;
+  loaded: boolean;
+  snapshot_id: string | null;
+  current: boolean;
+}
+
+export interface SnapshotSummary {
+  snapshot_id: string;
+  cluster_name: string;
+  current: boolean;
+}
+

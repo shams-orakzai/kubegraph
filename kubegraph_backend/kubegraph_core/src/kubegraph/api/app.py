@@ -29,10 +29,11 @@ from kubegraph.analysis import chokepoint
 from kubegraph.analysis.posture import compute_posture
 from kubegraph.api import serialize
 from kubegraph.api.schemas import (
-    BlastRadiusResponse, FleetItem, GraphResponse, LoadResponse, PathResponse,
-    RemediationResponse, SnapshotSummary, Stats,
+    BlastRadiusResponse, DemoCatalogItem, FleetItem, GraphResponse, LoadResponse,
+    PathResponse, RemediationResponse, SnapshotSummary, Stats,
 )
 from kubegraph.api.store import store
+from kubegraph.demo import catalog as democatalog
 from kubegraph.auth import router as auth_router
 from kubegraph.auth.deps import get_current_user
 from kubegraph.db import init_db
@@ -93,18 +94,51 @@ def load_inventory(inv: Inventory = Body(...)) -> LoadResponse:
     return LoadResponse(snapshot_id=snap.snapshot_id, stats=_stats(snap))
 
 
+def _load_catalog_cluster(entry) -> LoadResponse:
+    """Load a catalog cluster, reusing its snapshot if already loaded so
+    repeated selections don't create duplicates."""
+    inv = entry.build()
+    existing = store.by_cluster_name(inv.cluster_name)
+    if existing is not None:
+        store.set_current(existing.snapshot_id)
+        return LoadResponse(snapshot_id=existing.snapshot_id, stats=_stats(existing))
+    snap = store.add(inv)
+    return LoadResponse(snapshot_id=snap.snapshot_id, stats=_stats(snap))
+
+
+@api.get("/demo/catalog", response_model=list[DemoCatalogItem])
+def demo_catalog() -> list[DemoCatalogItem]:
+    """The selectable synthetic clusters, with their load/current status."""
+    out: list[DemoCatalogItem] = []
+    for c in democatalog.items():
+        cluster_name = c.build().cluster_name
+        snap = store.by_cluster_name(cluster_name)
+        out.append(DemoCatalogItem(
+            id=c.id, name=c.name, description=c.description, group=c.group,
+            cluster_name=cluster_name,
+            loaded=snap is not None,
+            snapshot_id=snap.snapshot_id if snap else None,
+            current=bool(snap and snap.snapshot_id == store.current_id),
+        ))
+    return out
+
+
 @api.post("/demo", response_model=LoadResponse)
 def load_demo() -> LoadResponse:
-    import importlib.util
-    from pathlib import Path
-    fx = Path(__file__).resolve().parents[3] / "tests" / "fixtures" / "build_fixture.py"
-    if not fx.exists():
-        raise HTTPException(404, "Demo fixture not found.")
-    spec = importlib.util.spec_from_file_location("build_fixture", fx)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    snap = store.add(mod.build())
-    return LoadResponse(snapshot_id=snap.snapshot_id, stats=_stats(snap))
+    """Load the default synthetic cluster (kept for backward compatibility)."""
+    entry = democatalog.get(democatalog.DEFAULT_ID)
+    if entry is None:
+        raise HTTPException(404, "Default demo cluster not found.")
+    return _load_catalog_cluster(entry)
+
+
+@api.post("/demo/{cluster_id}", response_model=LoadResponse)
+def load_demo_by_id(cluster_id: str) -> LoadResponse:
+    """Load a specific synthetic cluster from the catalog by id."""
+    entry = democatalog.get(cluster_id)
+    if entry is None:
+        raise HTTPException(404, f"Unknown demo cluster: {cluster_id}")
+    return _load_catalog_cluster(entry)
 
 
 @api.get("/snapshots", response_model=list[SnapshotSummary])
@@ -113,6 +147,14 @@ def list_snapshots() -> list[SnapshotSummary]:
                             cluster_name=s.inventory.cluster_name,
                             current=s.snapshot_id == store.current_id)
             for s in store.list()]
+
+
+@api.post("/snapshots/{snapshot_id}/select", response_model=LoadResponse)
+def select_snapshot(snapshot_id: str) -> LoadResponse:
+    """Switch the active cluster to an already-loaded snapshot."""
+    if not store.set_current(snapshot_id):
+        raise HTTPException(404, f"Unknown snapshot: {snapshot_id}")
+    return LoadResponse(snapshot_id=snapshot_id, stats=_stats(store.get(snapshot_id)))
 
 
 @api.get("/fleet", response_model=list[FleetItem])
